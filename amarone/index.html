@@ -1,0 +1,1024 @@
+<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Amarone Italian Restaurant - Authentic Italian dining in Hawick, Scotland. Fresh pasta, wood-fired pizzas, and fine wines in a warm, welcoming atmosphere.">
+    <meta name="keywords" content="Italian restaurant, Hawick, Scotland, pasta, pizza, fine dining, Amarone">
+    <meta name="author" content="Amarone Italian Restaurant Ltd">
+    <meta name="geo.placename" content="Hawick, Scotland">
+    <title>Amarone Italian Restaurant | Authentic Italian Dining in Hawick</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='15' fill='%23722F37'/&gt;&lt;text x='50' y='68' font-size='55' font-family='Georgia,serif' fill='%23F5E6C8' text-anchor='middle' font-weight='bold'&gt;A&lt;/text&gt;&lt;/svg&gt;">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --wine: #722F37;
+            --wine-dark: #4A1E23;
+            --gold: #C9A962;
+            --cream: #FDF8F0;
+            --charcoal: #2C2C2C;
+            --warm-grey: #5C5C5C;
+            --light-gold: #F5E6C8;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--charcoal);
+            line-height: 1.7;
+            background-color: var(--cream);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(44, 44, 44, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.6rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--cream);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(135deg, rgba(74, 30, 35, 0.85), rgba(44, 44, 44, 0.7)),
+                        linear-gradient(45deg, var(--wine-dark), var(--charcoal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-weight: normal;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--gold);
+            color: var(--charcoal);
+        }
+
+        .btn-solid {
+            background: var(--wine);
+            border-color: var(--wine);
+            color: var(--cream);
+        }
+
+        .btn-solid:hover {
+            background: var(--wine-dark);
+            border-color: var(--wine-dark);
+            color: var(--cream);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--wine);
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+
+        .section-title p {
+            color: var(--warm-grey);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 20px auto;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--wine), var(--wine-dark));
+            height: 400px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: '🍷';
+            font-size: 5rem;
+            opacity: 0.8;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--wine);
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .about-text p {
+            color: var(--warm-grey);
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* Menu Section */
+        .menu {
+            background: var(--cream);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .menu-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .menu-card h3 {
+            font-size: 1.4rem;
+            color: var(--wine);
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+
+        .menu-card p {
+            color: var(--warm-grey);
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--wine-dark);
+            color: var(--cream);
+        }
+
+        .testimonials .section-title h2 {
+            color: var(--cream);
+        }
+
+        .testimonials .section-title p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 35px;
+            border-radius: 5px;
+        }
+
+        .testimonial-card .stars {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .testimonial-card .author {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--gold);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            color: var(--wine);
+            margin-bottom: 25px;
+            font-weight: normal;
+        }
+
+        .contact-info .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-info .info-item .label {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .contact-info .info-item .value {
+            color: var(--warm-grey);
+            font-size: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            background: var(--cream);
+            border-radius: 3px;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            padding: 15px 40px;
+            background: var(--wine);
+            color: var(--cream);
+            border: none;
+            cursor: pointer;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: background 0.3s;
+            border-radius: 3px;
+        }
+
+        .contact-form button:hover {
+            background: var(--wine-dark);
+        }
+
+        /* Hours */
+        .hours-table {
+            margin-top: 30px;
+        }
+
+        .hours-table h4 {
+            color: var(--wine);
+            margin-bottom: 15px;
+            font-weight: normal;
+            font-size: 1.2rem;
+        }
+
+        .hours-table .hour-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        .hours-table .hour-row .day {
+            color: var(--charcoal);
+        }
+
+        .hours-table .hour-row .time {
+            color: var(--warm-grey);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--charcoal);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 20px 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 40px;
+        }
+
+        .footer h4 {
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .footer p, .footer a {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer a {
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--gold);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p {
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .footer-legal {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* Modal for Privacy/Terms */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .modal-overlay.active {
+            display: block;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            color: var(--wine);
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .modal-content h3 {
+            color: var(--wine);
+            margin: 25px 0 10px;
+            font-weight: normal;
+            font-size: 1.2rem;
+        }
+
+        .modal-content p {
+            color: var(--warm-grey);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--warm-grey);
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .modal-close:hover {
+            color: var(--wine);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(44, 44, 44, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-grid,
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 60px 15px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">AMARONE</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="hero-subtitle">Authentic Italian Dining in Hawick</p>
+            <h1>A Taste of Italy in the Heart of the Scottish Borders</h1>
+            <p>Experience the warmth of Italian hospitality with handcrafted dishes, fine wines, and an atmosphere that feels like home.</p>
+            <a href="#contact" class="btn">Reserve a Table</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Story</h2>
+                <div class="divider"></div>
+                <p>Where Italian tradition meets Scottish warmth</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-image"></div>
+                <div class="about-text">
+                    <h3>Welcome to Amarone</h3>
+                    <p>Nestled in the charming town of Hawick in the Scottish Borders, Amarone Italian Restaurant brings the authentic flavours of Italy to your table. Named after the celebrated Amarone wine from Veneto, our restaurant is a celebration of Italian culinary heritage.</p>
+                    <p>Every dish we serve tells a story — from our hand-rolled pasta made fresh daily, to our carefully sourced ingredients that honour both Italian tradition and the finest Scottish produce. Our kitchen is led by passionate chefs who believe that great food starts with great ingredients and ends with love.</p>
+                    <p>Whether you're joining us for a relaxed lunch, a special dinner, or a celebration with family and friends, we promise you an experience that is genuinely Italian in every way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>What We Offer</h2>
+                <div class="divider"></div>
+                <p>From antipasti to dolci, every course is crafted with care</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <div class="icon">🍝</div>
+                    <h3>Fresh Pasta</h3>
+                    <p>Handmade daily using traditional methods. From classic tagliatelle al ragù to delicate ravioli filled with ricotta and spinach — each plate is a labour of love.</p>
+                </div>
+                <div class="menu-card">
+                    <div class="icon">🍕</div>
+                    <h3>Wood-Fired Pizza</h3>
+                    <p>Our dough is slow-fermented for 48 hours, then blistered in our wood-fired oven. The result? Light, crispy, and unmistakably Italian.</p>
+                </div>
+                <div class="menu-card">
+                    <div class="icon">🥩</div>
+                    <h3>Secondi &amp; Grill</h3>
+                    <p>From tender Scottish beef tagliata to pan-seared sea bass with capers and lemon, our main courses showcase the best of land and sea.</p>
+                </div>
+                <div class="menu-card">
+                    <div class="icon">🥗</div>
+                    <h3>Antipasti &amp; Starters</h3>
+                    <p>Begin your meal with our bruschetta, burrata, or a selection of Italian cured meats and cheeses from artisan producers.</p>
+                </div>
+                <div class="menu-card">
+                    <div class="icon">🍷</div>
+                    <h3>Wine &amp; Cocktails</h3>
+                    <p>An extensive Italian wine list featuring everything from crisp Pinot Grigio to bold Barolo, plus classic Italian cocktails — Aperol Spritz, Negroni, and more.</p>
+                </div>
+                <div class="menu-card">
+                    <div class="icon">🍰</div>
+                    <h3>Dolci &amp; Desserts</h3>
+                    <p>End on a sweet note with our homemade tiramisù, panna cotta, or a classic affogato made with rich Italian espresso.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Guests Say</h2>
+                <div class="divider"></div>
+                <p>We're proud of the experiences we create</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Absolutely wonderful evening. The pasta was the best I've had outside of Italy, and the service was warm and attentive. Can't wait to come back!"</p>
+                    <span class="author">— Sarah M.</span>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"A real gem in Hawick. The atmosphere is lovely, the wine selection impressive, and the food is consistently excellent. Our go-to spot for date nights."</p>
+                    <span class="author">— James &amp; Claire T.</span>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"We hosted my mother's 70th birthday here and everything was perfect. The staff went above and beyond to make it special. Truly fantastic."</p>
+                    <span class="author">— David R.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get in Touch</h2>
+                <div class="divider"></div>
+                <p>We'd love to hear from you</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Visit Us</h3>
+                    <div class="info-item">
+                        <div>
+                            <div class="label">Address</div>
+                            <div class="value">Mansfield House Hotel<br>Weensland Road<br>Hawick, Scotland<br>TD9 8LB</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div>
+                            <div class="label">Telephone</div>
+                            <div class="value">01450 860 200</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div>
+                            <div class="label">Email</div>
+                            <div class="value">info@amaronehawick.co.uk</div>
+                        </div>
+                    </div>
+
+                    <div class="hours-table">
+                        <h4>Opening Hours</h4>
+                        <div class="hour-row">
+                            <span class="day">Monday</span>
+                            <span class="time">Closed</span>
+                        </div>
+                        <div class="hour-row">
+                            <span class="day">Tuesday – Thursday</span>
+                            <span class="time">12:00 – 21:00</span>
+                        </div>
+                        <div class="hour-row">
+                            <span class="day">Friday – Saturday</span>
+                            <span class="time">12:00 – 22:00</span>
+                        </div>
+                        <div class="hour-row">
+                            <span class="day">Sunday</span>
+                            <span class="time">12:00 – 20:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3 style="font-size:1.5rem; color:var(--wine); margin-bottom:25px; font-weight:normal;">Send Us a Message</h3>
+                    <form onsubmit="handleSubmit(event)">
+                        <input type="text" placeholder="Your Name" required="">
+                        <input type="email" placeholder="Your Email" required="">
+                        <input type="tel" placeholder="Phone Number">
+                        <input type="text" placeholder="Subject">
+                        <textarea placeholder="Your Message" required=""></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                    <p id="formSuccess" style="display:none; color:var(--wine); margin-top:15px; font-style:italic;">Thank you for your message. We'll be in touch shortly!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Amarone Italian Restaurant</h4>
+                <p>Bringing the authentic flavours of Italy to the Scottish Borders since 2025. Every dish crafted with passion, every guest welcomed like family.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#menu">Our Menu</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" onclick="openModal('privacy'); return false;">Privacy Policy</a></li>
+                    <li><a href="#" onclick="openModal('terms'); return false;">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Company Information</h4>
+                <p><strong>Registered Name:</strong><br>AMARONE ITALIAN RESTAURANT LTD</p>
+                <p><strong>Company Number:</strong><br>SC838557</p>
+                <p><strong>Registered Office:</strong><br>MANSFIELD HOUSE HOTEL WEENSLAND ROAD<br>HAWICK<br>SCOTLAND TD9 8LB</p>
+                <p><strong>Telephone:</strong> 01450 860 200</p>
+                <p><strong>Email:</strong> info@amaronehawick.co.uk</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>AMARONE ITALIAN RESTAURANT LTD | Company Number: SC838557</p>
+            <p>Registered Office: MANSFIELD HOUSE HOTEL WEENSLAND ROAD, HAWICK, SCOTLAND TD9 8LB</p>
+            <p class="footer-legal">© 2026 AMARONE ITALIAN RESTAURANT LTD - All rights reserved. Registered in Scotland under the Companies Act 2006.</p>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal-overlay" id="privacyModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('privacy')">×</button>
+            <h2>Privacy Policy</h2>
+            <p><strong>Last updated: January 2026</strong></p>
+            <p>AMARONE ITALIAN RESTAURANT LTD (Company Number: SC838557), registered at MANSFIELD HOUSE HOTEL WEENSLAND ROAD, HAWICK, SCOTLAND TD9 8LB ("we", "us", "our") is committed to protecting and respecting your privacy.</p>
+
+            <h3>1. Information We Collect</h3>
+            <p>We may collect and process the following data about you: your name, email address, telephone number, and any other information you provide when making a reservation, contacting us, or signing up for our newsletter.</p>
+
+            <h3>2. How We Use Your Information</h3>
+            <p>We use the information we collect to: process your table reservations, respond to your enquiries, improve our services, send you marketing communications (only with your consent), and comply with legal obligations.</p>
+
+            <h3>3. Data Sharing</h3>
+            <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except where required by law or to trusted service providers who assist us in operating our website and business.</p>
+
+            <h3>4. Data Security</h3>
+            <p>We implement appropriate security measures to protect your personal information against unauthorised access, alteration, disclosure, or destruction.</p>
+
+            <h3>5. Your Rights</h3>
+            <p>Under the UK General Data Protection Regulation (UK GDPR), you have the right to access, rectify, erase, restrict processing of, and port your personal data. You also have the right to object to processing and to withdraw consent at any time.</p>
+
+            <h3>6. Cookies</h3>
+            <p>Our website may use cookies to enhance your browsing experience. You can set your browser to refuse cookies, though some features of the site may not function properly as a result.</p>
+
+            <h3>7. Contact Us</h3>
+            <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+            <p>AMARONE ITALIAN RESTAURANT LTD<br>MANSFIELD HOUSE HOTEL WEENSLAND ROAD<br>HAWICK, SCOTLAND TD9 8LB<br>Email: info@amaronehawick.co.uk<br>Telephone: 01450 860 200</p>
+        </div>
+    </div>
+
+    <!-- Terms of Use Modal -->
+    <div class="modal-overlay" id="termsModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('terms')">×</button>
+            <h2>Terms of Use</h2>
+            <p><strong>Last updated: January 2026</strong></p>
+            <p>These terms and conditions govern your use of the website operated by AMARONE ITALIAN RESTAURANT LTD (Company Number: SC838557), registered at MANSFIELD HOUSE HOTEL WEENSLAND ROAD, HAWICK, SCOTLAND TD9 8LB.</p>
+
+            <h3>1. Use of Website</h3>
+            <p>By accessing and using this website, you accept and agree to be bound by these terms. The content of this site is for general information and use only, and is subject to change without notice.</p>
+
+            <h3>2. Intellectual Property</h3>
+            <p>All content on this website, including text, graphics, logos, images, and software, is the property of AMARONE ITALIAN RESTAURANT LTD and is protected by United Kingdom and international copyright laws.</p>
+
+            <h3>3. Reservations</h3>
+            <p>Table reservations made through this website or by telephone are subject to availability. We reserve the right to cancel or modify reservations where necessary. Parties of 6 or more may require a deposit.</p>
+
+            <h3>4. Limitation of Liability</h3>
+            <p>While we endeavour to keep the information on this website accurate and up to date, we make no representations or warranties of any kind about the completeness, accuracy, or reliability of the information provided.</p>
+
+            <h3>5. External Links</h3>
+            <p>This website may contain links to third-party websites. These links are provided for your convenience only, and we have no control over the content or availability of those sites.</p>
+
+            <h3>6. Governing Law</h3>
+            <p>These terms shall be governed by and construed in accordance with the laws of Scotland, and any disputes shall be subject to the exclusive jurisdiction of the Scottish courts.</p>
+
+            <h3>7. Contact</h3>
+            <p>For any questions regarding these Terms of Use, please contact:</p>
+            <p>AMARONE ITALIAN RESTAURANT LTD<br>MANSFIELD HOUSE HOTEL WEENSLAND ROAD<br>HAWICK, SCOTLAND TD9 8LB<br>Company Number: SC838557<br>Email: info@amaronehawick.co.uk<br>Telephone: 01450 860 200</p>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile nav toggle
+        function toggleNav() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Close nav on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            e.target.style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        }
+
+        // Modal functions
+        function openModal(type) {
+            if (type === 'privacy') {
+                document.getElementById('privacyModal').classList.add('active');
+            } else if (type === 'terms') {
+                document.getElementById('termsModal').classList.add('active');
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            if (type === 'privacy') {
+                document.getElementById('privacyModal').classList.remove('active');
+            } else if (type === 'terms') {
+                document.getElementById('termsModal').classList.remove('active');
+            }
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+
+
+</body></html>
